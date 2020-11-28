@@ -38,11 +38,11 @@ if [ ! -f $CACHE_DIR/$TELEGRAF_FILENAME ]; then
 fi
 
 echo "Extracting ${TELEGRAF_FILENAME}" | indent
-mkdir telegraf && tar -zxf $CACHE_DIR/$TELEGRAF_FILENAME -C $CACHE_DIR/telegraf --strip-components 2
+tar -zxf $CACHE_DIR/$TELEGRAF_FILENAME -C $CACHE_DIR
 
 # Copy the telegraf binary to the build dir
 mkdir -p $BUILD_DIR/bin
-cp $CACHE_DIR/telegraf/usr/bin/telegraf $BUILD_DIR/bin/telegraf
+cp $CACHE_DIR/telegraf-$TELEGRAF_VERSION/usr/bin/telegraf $BUILD_DIR/bin/telegraf
 
 influxdb_ssl_ca_cert="INFLUXDB_SSL_CA_CERT"
 if [ -f $ENV_DIR/$influxdb_ssl_ca_cert ]; then
