@@ -38,7 +38,7 @@ if [ ! -f $CACHE_DIR/$TELEGRAF_FILENAME ]; then
 fi
 
 echo "Extracting ${TELEGRAF_FILENAME}" | indent
-tar -C $CACHE_DIR -zxf $CACHE_DIR/$TELEGRAF_FILENAME
+mkdir telegraf && tar -zxf $CACHE_DIR/$TELEGRAF_FILENAME -C $CACHE_DIR/telegraf --strip-components 2
 
 # Copy the telegraf binary to the build dir
 mkdir -p $BUILD_DIR/bin
