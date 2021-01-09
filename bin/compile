@@ -22,9 +22,8 @@ done
 
 if [ $TELEGRAF_CONF ]; then TELEGRAF_CONF=$HOME/$TELEGRAF_CONF; fi
 TELEGRAF_CONF=${TELEGRAF_CONF-$HOME/telegraf.conf}
-TELEGRAF_VERSION=1.16.2
-TELEGRAF_FILENAME=telegraf-${TELEGRAF_VERSION}_linux_amd64.tar.gz
-TELEGRAF_URL=https://dl.influxdata.com/telegraf/releases/${TELEGRAF_FILENAME}
+TELEGRAF_FILENAME=telegraf
+TELEGRAF_URL=https://telegrafreleases.blob.core.windows.net/linux/${TELEGRAF_FILENAME}
 
 echo "Installing Telegraf ${TELEGRAF_VERSION}" | arrow
 
@@ -37,12 +36,9 @@ if [ ! -f $CACHE_DIR/$TELEGRAF_FILENAME ]; then
     curl -sLf -o $CACHE_DIR/$TELEGRAF_FILENAME $TELEGRAF_URL
 fi
 
-echo "Extracting ${TELEGRAF_FILENAME}" | indent
-tar -zxf $CACHE_DIR/$TELEGRAF_FILENAME -C $CACHE_DIR
-
 # Copy the telegraf binary to the build dir
 mkdir -p $BUILD_DIR/bin
-cp $CACHE_DIR/telegraf-$TELEGRAF_VERSION/usr/bin/telegraf $BUILD_DIR/bin/telegraf
+cp $CACHE_DIR/${TELEGRAF_FILENAME} $BUILD_DIR/bin/telegraf
 
 influxdb_ssl_ca_cert="INFLUXDB_SSL_CA_CERT"
 if [ -f $ENV_DIR/$influxdb_ssl_ca_cert ]; then
